@@ -71,9 +71,9 @@ export default function WheelPopup() {
       // Générer le QR code si c'est un Bon cadeau
       if ((lot === 'Bon cadeau 5 CHF' || lot === 'Bon cadeau FDL' || lot === 'Bon cadeau 10 CHF' || lot === '100chf') && finalCode) {
         try {
-          // URL de la page PDF avec le code
-          const pdfPageUrl = `${window.location.origin}/voucher-pdf/${finalCode}`;
-          const qrDataUrl = await QRCode.toDataURL(pdfPageUrl, {
+          // URL de l'API PDF avec le code
+          const pdfApiUrl = `${window.location.origin}/api/voucher/${finalCode}.pdf`;
+          const qrDataUrl = await QRCode.toDataURL(pdfApiUrl, {
             width: 150,
             margin: 2,
             color: {
@@ -257,7 +257,7 @@ export default function WheelPopup() {
               {showVictory && qrCodeDataUrl && (
                 <>
                   <Image src={qrCodeDataUrl} alt="QR Code" className="qr-code" width={120} height={120} />
-                  <p className="qr-description">Scannez pour télécharger le PDF</p>
+                  <p className="qr-description">Scannez pour télécharger votre bon cadeau</p>
                 </>
               )}
               
