@@ -23,7 +23,6 @@ import '@/styles/wheel.css';
 
 export default function WheelPopup() {
   const [hasSpun, setHasSpun] = useState(false);
-  const [currentVoucherCode, setCurrentVoucherCode] = useState('');
   const [currentLot, setCurrentLot] = useState<string | null>(null);
   const [turnState, setTurnState] = useState({ currentTurn: 1, totalPlays: 0, lastPlayDate: '' });
   const [showVictory, setShowVictory] = useState(false);
@@ -66,18 +65,17 @@ export default function WheelPopup() {
       
       // Code seulement pour les bons cadeaux
       const finalCode = (lot === 'Bon cadeau 5 CHF' || lot === 'Bon cadeau FDL' || lot === 'Bon cadeau 10 CHF' || lot === '100chf') ? (code || `DEMO-${lot.replace(/\s+/g, '-').toUpperCase()}-${turnState.currentTurn.toString().padStart(3, '0')}`) : '';
-      setCurrentVoucherCode(finalCode);
 
       // Générer le QR code si c'est un Bon cadeau
       if ((lot === 'Bon cadeau 5 CHF' || lot === 'Bon cadeau FDL' || lot === 'Bon cadeau 10 CHF' || lot === '100chf') && finalCode) {
         try {
-          // URL de l'API PDF avec le code
-          const pdfApiUrl = `${window.location.origin}/api/voucher/${finalCode}.pdf`;
-          const qrDataUrl = await QRCode.toDataURL(pdfApiUrl, {
+          // URL de la page web avec le code
+          const webPageUrl = `${window.location.origin}/voucher/${finalCode}`;
+          const qrDataUrl = await QRCode.toDataURL(webPageUrl, {
             width: 150,
             margin: 2,
             color: {
-              dark: '#D83966',
+              dark: '#040a8c',
               light: '#FFFFFF'
             }
           });
@@ -112,7 +110,6 @@ export default function WheelPopup() {
     } catch (error) {
       console.error('Erreur lors du tirage:', error);
       setCurrentLot('Pause Migros'); // Lot par défaut
-      setCurrentVoucherCode('');
     }
   };
 
@@ -130,7 +127,6 @@ export default function WheelPopup() {
     setHasSpun(false);
     setShowVictory(false);
     setCurrentLot(null);
-    setCurrentVoucherCode('');
     setQrCodeDataUrl('');
     
     // Remettre la roue à sa position initiale
@@ -151,7 +147,6 @@ export default function WheelPopup() {
       setHasSpun(false);
       setShowVictory(false);
     setCurrentLot(null);
-    setCurrentVoucherCode('');
     setQrCodeDataUrl('');
     setTurnState({ currentTurn: 1, totalPlays: 0, lastPlayDate: '' });
     setArrowClickCount(0);
@@ -210,7 +205,7 @@ export default function WheelPopup() {
       <div className="wheel-main-content">
         {/* Titre au-dessus des colonnes */}
         <div className="wheel-header">
-          <h1 className="wheel-title">ROUE SMOOD</h1>
+          <h1 className="wheel-title">Lancer la roue Smood Business !</h1>
         </div>
 
         {/* Container des colonnes */}
@@ -257,22 +252,18 @@ export default function WheelPopup() {
               {showVictory && qrCodeDataUrl && (
                 <>
                   <Image src={qrCodeDataUrl} alt="QR Code" className="qr-code" width={120} height={120} />
-                  <p className="qr-description">Scannez pour télécharger votre bon cadeau</p>
+                  <p className="qr-description">Scannez pour voir votre bon cadeau</p>
                 </>
               )}
               
-              {currentVoucherCode && (
-                <div className="voucher-code">
-                  <p className="voucher-text">Code: {currentVoucherCode}</p>
-                </div>
-              )}
+
             </div>
             
             {/* Bouton pour tourner une autre roue */}
             {showVictory && (
               <div className="victory-buttons">
                 <button 
-                  className="button-close show"
+                  className=""
                   onClick={handleContinue}
                 >
                   TOURNER UNE AUTRE ROUE
