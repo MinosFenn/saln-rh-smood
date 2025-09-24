@@ -77,10 +77,10 @@ export async function fetchTurnsFromCSV(): Promise<TurnData[]> {
     const dataLines = lines.slice(1).filter(line => line.trim());
     
     const turns: TurnData[] = dataLines.map((line, index) => {
-      const [tour, lot, zone, code, used, note] = line.split(',');
+      const [tour, lot, zone, code] = line.split(',');
       return {
         tour: parseInt(tour) || index + 1,
-        lot: lot.trim() as any,
+        lot: lot.trim() as LotType,
         zone: parseInt(zone) || 1,
         code: code.trim() || ''
       };

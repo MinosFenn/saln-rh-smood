@@ -24,7 +24,7 @@ export default function VoucherPage() {
           </div>
 
           <div className="download-section">
-            <h3>Téléchargez l'application :</h3>
+            <h3>Téléchargez l&apos;application :</h3>
             <div className="download-buttons">
               <a 
                 href="https://apps.apple.com/app/smood/id123456789" 
@@ -33,7 +33,7 @@ export default function VoucherPage() {
                 className="download-btn app-store"
               >
                 <Image
-                  src="/app-store-badge.png"
+                  src="/apple.png"
                   alt="Télécharger sur l'App Store"
                   width={120}
                   height={40}
@@ -46,7 +46,7 @@ export default function VoucherPage() {
                 className="download-btn google-play"
               >
                 <Image
-                  src="/google-play-badge.png"
+                  src="/android.png"
                   alt="Disponible sur Google Play"
                   width={120}
                   height={40}
@@ -58,9 +58,9 @@ export default function VoucherPage() {
           <div className="instructions">
             <h3>Comment utiliser votre code :</h3>
             <ol>
-              <li>Téléchargez l'application Smood</li>
+              <li>Téléchargez l&apos;application Smood</li>
               <li>Créez votre compte ou connectez-vous</li>
-              <li>Allez dans "Mes codes" ou "Vouchers"</li>
+              <li>Allez dans &quot;Mes codes&quot; ou &quot;Vouchers&quot;</li>
               <li>Entrez le code : <strong>{code}</strong></li>
               <li>Profitez de votre bon cadeau !</li>
             </ol>

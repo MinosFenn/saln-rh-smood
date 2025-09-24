@@ -16,6 +16,7 @@ import {
   getZoneForTurn,
   getCodeForTurn
 } from '@/utils/turnLogic';
+import { LotType } from '@/config/lotMapping';
 // Import VOUCHER_DETAILS supprimé - plus nécessaire avec les codes du CSV
 // Import WheelZone supprimé - plus nécessaire avec le système CSV
 import '@/styles/wheel.css';
@@ -118,7 +119,7 @@ export default function WheelPopup() {
   const handleWheelTransitionEnd = () => {
     setShowVictory(true);
     if (displayRef.current && currentLot) {
-      const voucherType = lotToVoucherType(currentLot as any);
+      const voucherType = lotToVoucherType(currentLot as LotType);
       const message = victoryMessages[voucherType] || currentLot;
       displayRef.current.innerHTML = message;
     }
@@ -137,7 +138,7 @@ export default function WheelPopup() {
       wheelRef.current.style.transition = 'none';
       wheelRef.current.style.transform = 'rotate(0deg)';
       // Forcer un reflow pour que la transition se remette à zéro
-      wheelRef.current.offsetHeight;
+      void wheelRef.current.offsetHeight;
     }
   };
 
@@ -160,7 +161,7 @@ export default function WheelPopup() {
         wheelRef.current.style.transition = 'none';
         wheelRef.current.style.transform = 'rotate(0deg)';
         // Forcer un reflow pour que la transition se remette à zéro
-        wheelRef.current.offsetHeight;
+        void wheelRef.current.offsetHeight;
       }
       
       // Reset des données
@@ -255,7 +256,7 @@ export default function WheelPopup() {
               {/* QR Code centré sous la mention du lot */}
               {showVictory && qrCodeDataUrl && (
                 <>
-                  <img src={qrCodeDataUrl} alt="QR Code" className="qr-code" />
+                  <Image src={qrCodeDataUrl} alt="QR Code" className="qr-code" width={120} height={120} />
                   <p className="qr-description">Scannez pour télécharger le PDF</p>
                 </>
               )}

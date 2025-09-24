@@ -93,7 +93,7 @@ export default function VoucherPDFPage() {
               </div>
 
               <div className="download-section">
-                <h3>Téléchargez l'application :</h3>
+                <h3>Téléchargez l&apos;application :</h3>
                 <div className="download-buttons">
                   <div className="download-btn app-store">
                     <div className="app-store-badge">App Store</div>
@@ -107,9 +107,9 @@ export default function VoucherPDFPage() {
               <div className="instructions">
                 <h3>Comment utiliser votre code :</h3>
                 <ol>
-                  <li>Téléchargez l'application Smood</li>
+                  <li>Téléchargez l&apos;application Smood</li>
                   <li>Créez votre compte ou connectez-vous</li>
-                  <li>Allez dans "Mes codes" ou "Vouchers"</li>
+                  <li>Allez dans &quot;Mes codes&quot; ou &quot;Vouchers&quot;</li>
                   <li>Entrez le code : <strong>{code}</strong></li>
                   <li>Profitez de votre bon cadeau !</li>
                 </ol>
@@ -118,7 +118,7 @@ export default function VoucherPDFPage() {
 
             <div className="voucher-footer">
               <div className="qr-info">
-                <p>Scannez le QR code pour télécharger l'application</p>
+                <p>Scannez le QR code pour télécharger l&apos;application</p>
               </div>
             </div>
           </div>
