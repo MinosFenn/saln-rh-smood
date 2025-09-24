@@ -24,3 +24,14 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Font Mazzard Bold pour les headings et boutons */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-mazzard-bold), 'Inter', sans-serif;
+  font-weight: 700;
+}
+
+button {
+  font-family: var(--font-mazzard-bold), 'Inter', sans-serif;
+  font-weight: 700;
+}
