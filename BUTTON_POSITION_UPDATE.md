@@ -89,3 +89,4 @@ Le bouton reste dans la colonne droite sur mobile aussi, mais la colonne devient
 ```
 
 Le bouton "JE TENTE MA CHANCE !" est maintenant **parfaitement positionné à droite** ! 🎉
+

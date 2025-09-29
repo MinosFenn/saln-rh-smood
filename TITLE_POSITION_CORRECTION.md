@@ -132,3 +132,4 @@ Le titre "ROUE SMOOD" est maintenant **correctement positionné** au-dessus des 
 - **Justification** : `justify-content: flex-start` pour aligner en haut
 - **Responsive** : Même ordre maintenu sur mobile et desktop
 - **Structure** : Hiérarchie visuelle logique et cohérente
+

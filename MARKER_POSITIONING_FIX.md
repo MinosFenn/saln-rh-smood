@@ -121,3 +121,4 @@ Le marker est maintenant **parfaitement superposé** au-dessus de la roue et s'a
 - **Top** : `-40px` pour être au-dessus de la roue
 - **Responsive** : Tailles et positions ajustées pour chaque écran
 - **Centrage** : Parfaitement centré avec `left: 50%` + `transform: translateX(-50%)`
+

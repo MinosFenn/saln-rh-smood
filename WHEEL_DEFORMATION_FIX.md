@@ -182,3 +182,4 @@ La roue est maintenant **parfaitement circulaire** et l'interface est **entière
 - **Responsive** : 4 breakpoints pour une adaptation optimale
 - **Performance** : Animations fluides et optimisées
 - **UX** : Interface adaptée à tous les appareils
+

@@ -89,3 +89,4 @@ Si pas de code dans le CSV :
 ## 🚀 **Résultat**
 
 Le système est **ultra-simplifié** : QR code → Landing page → Téléchargement d'app ! 🎉
+

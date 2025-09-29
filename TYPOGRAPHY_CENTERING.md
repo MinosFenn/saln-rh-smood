@@ -84,3 +84,4 @@ h1, h2, h3, h4, h5, h6 {
 ## 🚀 **Résultat**
 
 Le système utilise maintenant la **font Mazzard Bold 700** pour tous les headings et **tout le contenu est centré** pour un design professionnel et cohérent ! 🎉
+

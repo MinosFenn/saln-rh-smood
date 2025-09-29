@@ -131,3 +131,4 @@ Le contenu de la colonne de droite est maintenant **parfaitement centré** avec 
 - **Messages** : Centrés dans leur colonne
 - **Hauteurs** : Identiques entre les deux colonnes
 - **Équilibre** : Interface parfaitement équilibrée
+

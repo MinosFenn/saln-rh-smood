@@ -89,3 +89,4 @@ La roue est maintenant **plus grande et mieux intégrée** au design, sans fond 
 - **Colonne messages** : 40% de l'espace (flex: 1)
 - **Container roue** : Pleine largeur, hauteur minimale 500px
 - **Background** : Supprimé pour une intégration parfaite
+

@@ -90,3 +90,4 @@ Le bouton "TOURNER UNE AUTRE ROUE" disparaissait quand le QR code s'affichait ca
 5. **Bouton visible** → "TOURNER UNE AUTRE ROUE" **TOUJOURS AFFICHÉ** ✅
 
 Le bouton est maintenant **toujours visible** même quand le QR code s'affiche ! 🎉
+

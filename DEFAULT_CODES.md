@@ -85,3 +85,4 @@ Les codes par défaut s'affichent exactement comme les codes prédéfinis :
 ## 🚀 **Résultat**
 
 Le système fonctionne parfaitement même avec un CSV vide de codes, générant automatiquement des codes d'exemple professionnels ! 🎉
+

@@ -141,3 +141,4 @@
 7. **Bouton continuer** → Dans la zone droite
 
 Le layout est maintenant **parfaitement organisé** avec la roue à gauche et les messages à droite ! 🎉
+

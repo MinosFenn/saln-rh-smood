@@ -93,3 +93,4 @@
 ## 🚀 **Résultat**
 
 Le QR code est maintenant **parfaitement centré** sous la mention du lot gagné, avec le bouton "TOURNER UNE AUTRE ROUE" en bas ! 🎉
+

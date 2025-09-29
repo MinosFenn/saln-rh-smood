@@ -62,3 +62,4 @@ useEffect(() => {
 ## 🚀 **Résultat**
 
 Le QR code fonctionne maintenant parfaitement et redirige directement vers la page voucher avec le code et les boutons de téléchargement d'app ! 🎉
+

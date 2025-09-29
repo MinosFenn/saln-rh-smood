@@ -1,17 +1,126 @@
 'use client';
 
 import { useParams } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import Image from 'next/image';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+
+// Conditions générales pour chaque code
+const VOUCHER_CONDITIONS = {
+  'SALON-RH-10CHF': {
+    code: 'SALON-RH-10CHF',
+    maxUsage: 1,
+    reduction: '10 CHF',
+    minOrder: '40 CHF',
+    validUntil: '31/12/2025 00:00'
+  },
+  'SALON-RH-5CHF': {
+    code: 'SALON-RH-5CHF',
+    maxUsage: 1,
+    reduction: '5 CHF',
+    minOrder: '40 CHF',
+    validUntil: '31/12/2025 00:00'
+  },
+  'SALON-RH-FDL': {
+    code: 'SALON-RH-FDL',
+    maxUsage: 1,
+    reduction: 'Frais de livraison offerts',
+    minOrder: '40 CHF',
+    validUntil: '31/12/2025 00:00'
+  },
+  'SALON-RH-100CHF': {
+    code: 'SALON-RH-100CHF',
+    maxUsage: 1,
+    reduction: '100 CHF',
+    minOrder: '100 CHF',
+    validUntil: '31/12/2025 00:00'
+  },
+  'SALON-RH-100CHF-WIN': {
+    code: 'SALON-RH-100CHF-WIN',
+    maxUsage: 1,
+    reduction: '100 CHF',
+    minOrder: '100 CHF',
+    validUntil: '31/12/2025 00:00'
+  }
+};
 
 export default function VoucherPage() {
   const params = useParams();
   const code = params.code as string;
+  const cardRef = useRef<HTMLDivElement>(null);
+  const logoRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
     // Marquer que l'utilisateur a visité une page voucher
     sessionStorage.setItem('hasVisitedVoucher', 'true');
   }, []);
+
+  // Récupérer les conditions pour le code actuel
+  const conditions = VOUCHER_CONDITIONS[code as keyof typeof VOUCHER_CONDITIONS];
+
+  // Fonction utilitaire: attendre le chargement du logo si nécessaire
+  const waitForImage = async (img?: HTMLImageElement | null): Promise<void> => {
+    if (!img) return;
+    if (img.complete) return;
+    await new Promise<void>((resolve) => {
+      img.onload = () => resolve();
+      img.onerror = () => resolve();
+    });
+  };
+
+  // Fonction pour télécharger la carte en PDF
+  const downloadCardAsPDF = async () => {
+    if (!cardRef.current || !conditions) return;
+
+    try {
+      // Attendre que l'élément soit complètement rendu
+      await new Promise(resolve => setTimeout(resolve, 50));
+      await waitForImage(logoRef.current);
+      await new Promise((r) => requestAnimationFrame(() => r(undefined)));
+
+      // Utiliser la taille réelle du noeud pour éviter les marges inutiles
+      const { width: nodeWidth, height: nodeHeight } = cardRef.current.getBoundingClientRect();
+
+      // Capturer l'élément sans forcer width/height pour respecter le layout réel
+      const canvas = await html2canvas(cardRef.current, {
+        useCORS: true,
+        allowTaint: true,
+        logging: false
+      });
+      
+      const imgData = canvas.toDataURL('image/png', 1.0);
+      
+      // Obtenir les dimensions réelles visibles de la carte (après croissance)
+      const { width: nodeWidth2, height: nodeHeight2 } = cardRef.current.getBoundingClientRect();
+      const canvasWidth = Math.round(nodeWidth2 || canvas.width);
+      const canvasHeight = Math.round(nodeHeight2 || canvas.height);
+      
+      // Si html2canvas rend un canvas plus grand (DPR), normaliser sur les dimensions CSS
+      const renderWidthPx = Math.round(nodeWidth || canvasWidth);
+      const renderHeightPx = Math.round(nodeHeight || canvasHeight);
+
+      // Convertir en mm (1px = 0.264583mm)
+      const widthInMm = renderWidthPx * 0.264583;
+      const heightInMm = renderHeightPx * 0.264583;
+      
+      // Créer un PDF avec les dimensions exactes
+      const pdf = new jsPDF({
+        orientation: widthInMm > heightInMm ? 'landscape' : 'portrait',
+        unit: 'mm',
+        format: [widthInMm, heightInMm]
+      });
+      
+      // Ajouter l'image aux dimensions exactes
+      pdf.addImage(imgData, 'PNG', 0, 0, widthInMm, heightInMm, undefined, 'FAST');
+      
+      // Télécharger le PDF
+      pdf.save(`voucher-${code}.pdf`);
+    } catch (error) {
+      console.error('Erreur lors de la génération du PDF:', error);
+    }
+  };
+  
 
   return (
     <div className="voucher-page">
@@ -31,13 +140,62 @@ export default function VoucherPage() {
           <h2>Vous avez gagné un bon</h2>
         </div>
 
-          <div className="code-section">
-              <span className="code-text">{code}</span>
+        
+
+          {/* Carte de voucher pour téléchargement */}
+          {conditions && (
+            <div className="wallet-card-container">
+              <div className="wallet-card" ref={cardRef}>
+                {/* Section du haut - Logo Smood */}
+                <div className="wallet-card-top">
+                  <div className="wallet-card-logo-horizontal">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      ref={logoRef}
+                      src="/RGB-Logos-Smood-business-large-blue.png"
+                      alt="Smood Business"
+                      crossOrigin="anonymous"
+                      decoding="async"
+                      fetchPriority="high"
+                    />
+                  </div>
+                </div>
+                
+                {/* Section centrale - Contenu principal */}
+                <div className="wallet-card-center">
+                  <div className="wallet-card-main-content">
+                    <div className="wallet-card-subtitle">VOUS AVEZ GAGNÉ</div>
+                    <div className="wallet-card-title">{conditions.reduction}</div>
+                    <div className="wallet-card-divider"></div>
+                    <div className="wallet-card-code-section">
+                      <div className="wallet-card-code-label">CODE</div>
+                      <div className="wallet-card-code">{code}</div>
+                    </div>
+                    <div className="wallet-card-divider"></div>
+                    <div className="wallet-card-details">
+                      <div className="wallet-card-detail">
+                        <span>                Utilisation maximale par client : {conditions.maxUsage}. Montant de réduction : {conditions.reduction}. Panier minimum : {conditions.minOrder}. Utilisable jusqu&apos;au : {conditions.validUntil}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+              </div>
+              
+              <button 
+                className="download-card-btn"
+                onClick={downloadCardAsPDF}
+              >
+                📱 Télécharger PDF
+              </button>
             </div>
-          
+          )}
+
+          {/* Conditions générales */}
 
           <div className="download-section">
-            <h3>Téléchargez l&apos;application :</h3>
+              <h3>Téléchargez l&apos;application :</h3>
             <div className="download-buttons">
               <a 
                 href="https://apps.apple.com/ch/app/smood-lappli-de-livraison/id1227720412?l=fr-FR" 
@@ -128,7 +286,7 @@ export default function VoucherPage() {
         }
 
         .code-section {
-         margin: 30px 0;
+         margin: 14px 0;
           padding: 20px;
         background: #040a8c;
         color: #FFFFFF;
@@ -139,11 +297,166 @@ export default function VoucherPage() {
         }
 
         .download-section, .instructions {
-          margin: 30px 0;
+          margin: 16px 0;
           padding: 20px;
           border: 2px solid #f0f0f0;
           border-radius: 12px;
           background: #fafafa;
+        }
+
+        .conditions-section {
+          text-align: center;
+          margin: 14px 0;
+          padding: 0;
+        }
+
+        .conditions-text {
+          color: #666;
+          font-size: 0.75em;
+          line-height: 1.4;
+          margin: 0;
+          font-style: italic;
+        }
+
+        /* Wallet Card Styles - Design sobre et professionnel */
+        .wallet-card-container {
+          margin: 20px 0;
+          text-align: center;
+        }
+
+        .wallet-card {
+          width: 100%;
+          max-width: 580px;
+          height: auto;
+          min-height: 400px;
+          background: linear-gradient(135deg, #040a8c 0%, #1a237e 100%);
+          border: 2px solid #040a8c;
+          margin: 0 auto 20px;
+          position: relative;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+          display: flex;
+          flex-direction: column;
+          overflow: hidden;
+        }
+
+        /* Section du haut - Logo Smood */
+        .wallet-card-top {
+          height: 64px;
+          background: #f8f9fa;
+          border-bottom: 2px dashed #ccc;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 8px 14px;
+        }
+
+        .wallet-card-logo-horizontal {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          opacity: 1;
+          width: 100%;
+        }
+        
+        .wallet-card-logo-horizontal img {
+          max-height: 48px;
+          width: auto;
+          object-fit: contain;
+          display: block;
+        }
+
+        /* Section centrale - Contenu principal */
+        .wallet-card-center {
+          flex: 1;
+          padding: 30px 35px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          position: relative;
+        }
+
+        .wallet-card-main-content {
+          text-align: center;
+          display: flex;
+          flex-direction: column;
+          align-items: stretch;
+          gap: 16px;
+        }
+
+
+        .wallet-card-subtitle {
+          font-size: 14px;
+          font-weight: 600;
+          color: rgba(255,255,255,0.8);
+          letter-spacing: 1px;
+          text-transform: uppercase;
+        }
+
+        .wallet-card-title {
+          font-size: 52px;
+          font-weight: 300;
+          color: #ffffff;
+          margin-bottom: 0;
+          letter-spacing: 2px;
+        }
+
+        .wallet-card-divider {
+          width: 100%;
+          height: 1px;
+          background: rgba(255,255,255,0.3);
+          margin: 0;
+        }
+
+        .wallet-card-code-section {
+          margin: 0;
+        }
+
+        .wallet-card-code-label {
+          font-size: 12px;
+          font-weight: 600;
+          color: rgba(255,255,255,0.8);
+          letter-spacing: 1px;
+          margin-bottom: 5px;
+          text-transform: uppercase;
+        }
+
+        .wallet-card-code {
+          font-size: 28px;
+          font-weight: bold;
+          color: #ffffff;
+          letter-spacing: 3px;
+        }
+
+        .wallet-card-details {
+          margin-top: 0;
+          text-align: center;
+        }
+
+        .wallet-card-detail {
+          font-size: 14px;
+          color: rgba(255,255,255,0.8);
+          margin-bottom: 12px;
+          line-height: 1.6;
+        }
+
+
+        .download-card-btn {
+          background: #040a8c;
+          color: white;
+          border: none;
+          padding: 12px 24px;
+          border-radius: 25px;
+          font-size: 1em;
+          font-weight: bold;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          box-shadow: 0 4px 15px rgba(4, 10, 140, 0.3);
+        }
+
+        .download-card-btn:hover {
+          background: #1a237e;
+          transform: translateY(-2px);
+          box-shadow: 0 6px 20px rgba(4, 10, 140, 0.4);
         }
 
         .download-section {
@@ -231,12 +544,57 @@ export default function VoucherPage() {
 
         @media (max-width: 600px) {
           .voucher-container {
-            padding: 20px;
+            padding: 10px;
           }
           
           .download-buttons {
             flex-direction: column;
             align-items: center;
+            gap: 10px;
+          }
+
+          .conditions-text {
+            font-size: 0.75em;
+            line-height: 1.3;
+          }
+
+          .conditions-section {
+            margin: 10px 0;
+          }
+
+          .wallet-card-container {
+            margin: 10px 0;
+          }
+
+          .wallet-card {
+            margin: 0 auto 10px;
+          }
+
+          .wallet-card-center {
+            padding: 20px;
+          }
+
+          .wallet-card-subtitle {
+            font-size: 10px;
+          }
+
+          .wallet-card-title {
+            font-size: 24px;
+          }
+
+          .wallet-card-code {
+            font-size: 18px;
+            letter-spacing: 2px;
+          }
+
+          .wallet-card-detail {
+            font-size: 11px;
+            margin-bottom: 6px;
+          }
+
+          .download-card-btn {
+            padding: 8px 16px;
+            font-size: 0.9em;
           }
         }
       `}</style>

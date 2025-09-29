@@ -137,3 +137,4 @@ Toutes les erreurs ESLint et TypeScript ont été corrigées :
 - **Maintenabilité** : Code plus propre et lisible
 
 Le projet compile maintenant sans erreurs ! 🎉
+

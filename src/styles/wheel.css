@@ -1215,6 +1215,25 @@ button {
   font-weight: bold;
 }
 
+/* Voucher Code Display */
+.voucher-code-display {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.voucher-code-text {
+  background: #040a8c;
+  color: #FFFFFF;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 1.1em;
+  font-weight: bold;
+  letter-spacing: 1px;
+  display: inline-block;
+  border: 2px solid #040a8c;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
 /* Font Mazzard Bold pour les headings et boutons */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-mazzard-bold), 'Inter', sans-serif;
@@ -1245,6 +1264,11 @@ button {
   .wheel-container {
     max-width: 450px;
   }
+  
+  .voucher-code-text {
+    font-size: 0.9em;
+    padding: 10px 15px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -1257,6 +1281,11 @@ button {
   .qr-code {
     width: 100px;
     height: 100px;
+  }
+  
+  .voucher-code-text {
+    font-size: 0.8em;
+    padding: 8px 12px;
   }
 }
 

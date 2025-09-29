@@ -55,3 +55,4 @@ button {
 ## 🚀 **Résultat :**
 
 Tous les boutons et headings utilisent maintenant la **font Mazzard Bold 700** pour une typographie cohérente et professionnelle ! 🎉
+

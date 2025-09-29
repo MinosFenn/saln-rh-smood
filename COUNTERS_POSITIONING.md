@@ -110,3 +110,4 @@ Les compteurs "Tour actuel" et "Tours joués" sont maintenant **parfaitement pos
 - **Design moderne** : Fond semi-transparent avec effet de flou
 - **Responsive** : S'adapte aux petits écrans
 - **Non intrusif** : N'interfère pas avec le contenu principal
+

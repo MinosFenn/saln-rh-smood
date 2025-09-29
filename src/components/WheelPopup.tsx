@@ -28,6 +28,7 @@ export default function WheelPopup() {
   const [showVictory, setShowVictory] = useState(false);
   const [arrowClickCount, setArrowClickCount] = useState(0);
   const [qrCodeDataUrl, setQrCodeDataUrl] = useState<string>('');
+  const [currentVoucherCode, setCurrentVoucherCode] = useState<string>('');
   
   const wheelRef = useRef<HTMLImageElement>(null);
   const displayRef = useRef<HTMLDivElement>(null);
@@ -63,8 +64,20 @@ export default function WheelPopup() {
 
       setCurrentLot(lot);
       
-      // Code seulement pour les bons cadeaux
-      const finalCode = (lot === 'Bon cadeau 5 CHF' || lot === 'Bon cadeau FDL' || lot === 'Bon cadeau 10 CHF' || lot === '100chf') ? (code || `DEMO-${lot.replace(/\s+/g, '-').toUpperCase()}-${turnState.currentTurn.toString().padStart(3, '0')}`) : '';
+      // Code seulement pour les bons cadeaux - utiliser les codes fixes SALON-RH
+      let finalCode = '';
+      if (lot === 'Bon cadeau 5 CHF') {
+        finalCode = 'SALON-RH-5CHF';
+      } else if (lot === 'Bon cadeau 10 CHF') {
+        finalCode = 'SALON-RH-10CHF';
+      } else if (lot === 'Bon cadeau FDL') {
+        finalCode = 'SALON-RH-FDL';
+      } else if (lot === '100chf') {
+        finalCode = 'SALON-RH-100CHF-WIN';
+      }
+      
+      // Stocker le code de voucher pour l'affichage
+      setCurrentVoucherCode(finalCode);
 
       // Générer le QR code si c'est un Bon cadeau
       if ((lot === 'Bon cadeau 5 CHF' || lot === 'Bon cadeau FDL' || lot === 'Bon cadeau 10 CHF' || lot === '100chf') && finalCode) {
@@ -128,6 +141,7 @@ export default function WheelPopup() {
     setShowVictory(false);
     setCurrentLot(null);
     setQrCodeDataUrl('');
+    setCurrentVoucherCode('');
     
     // Remettre la roue à sa position initiale
     if (wheelRef.current) {
@@ -148,6 +162,7 @@ export default function WheelPopup() {
       setShowVictory(false);
     setCurrentLot(null);
     setQrCodeDataUrl('');
+    setCurrentVoucherCode('');
     setTurnState({ currentTurn: 1, totalPlays: 0, lastPlayDate: '' });
     setArrowClickCount(0);
       
@@ -253,6 +268,9 @@ export default function WheelPopup() {
                 <>
                   <Image src={qrCodeDataUrl} alt="QR Code" className="qr-code" width={120} height={120} />
                   <p className="qr-description">Scannez pour voir votre bon cadeau</p>
+                  <div className="voucher-code-display">
+                    <span className="voucher-code-text">{currentVoucherCode}</span>
+                  </div>
                 </>
               )}
               

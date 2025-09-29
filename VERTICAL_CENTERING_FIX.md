@@ -83,3 +83,4 @@ Le contenu de la colonne de droite est maintenant **parfaitement centré vertica
 - **Bouton "TOURNER UNE AUTRE ROUE"**
 
 Tous les éléments sont maintenant **équilibrés** dans la colonne de droite ! ✨
+

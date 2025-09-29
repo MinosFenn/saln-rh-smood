@@ -178,3 +178,4 @@ L'interface est maintenant **parfaitement optimisée pour iPad** avec un marker 
 - **Espace** : Colonnes 1.3:1 au lieu de 1.5:1 pour meilleur équilibre
 - **Responsive** : Breakpoints spécifiques portrait/paysage
 - **Ergonomie** : Tailles et espacements adaptés à l'usage tactile
+
