@@ -74,3 +74,12 @@ Tour,Lot,Zone,Code,Used,Note
 - Anti‑fraude (limite par personne/jour), quotas par dotation, reporting simple.
 - Synchronisation CRM/marketing (Braze/HubSpot/Salesforce) pour nurturing post‑salon.
 
+## 11) Sécurité & confidentialité (ne pas exposer les codes)
+- Ne pas servir le CSV côté client: sortir `public/J1.csv` du dossier public; stocker côté serveur (`private/` gitignored) ou DB.
+- API serveur minimaliste `/api/turns`:
+  - Input: `turn`, `day`.
+  - Output: seulement les infos nécessaires (lot, zone, éventuellement un token), jamais toute la liste.
+  - Headers: `Cache-Control: no-store`.
+- Option de masquage du code: retourner un identifiant temporaire; révéler le vrai code seulement sur `/voucher/[code]` via logique server‑only.
+- Nettoyage Git: rendre le repo privé ou purger l’historique du CSV (BFG/git filter‑repo), puis `.gitignore`.
+

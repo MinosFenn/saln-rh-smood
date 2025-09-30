@@ -75,6 +75,18 @@ Exemples
   - Multi‑langue, accessibilité, mode kiosque/offline de secours.
   - Co‑branding sponsor, thèmes visuels par événement.
 
+### Sécurité & confidentialité (anti‑spoiler des codes)
+- Ne plus exposer le CSV au public ni sur GitHub
+  - Retirer `public/J1.csv` du repo public, le mettre en privé et en `.gitignore`.
+  - Stocker les données côté serveur (dossier `private/`, DB, Vercel KV/Edge Config).
+- Servir uniquement le minimum via une API serveur
+  - Endpoint `/api/turns?turn=…&day=…` qui renvoie seulement le lot/la zone du tour courant (pas toute la liste).
+  - `Cache-Control: no-store` pour éviter la mise en cache client/CDN.
+- Masquer le code jusqu’à la page voucher
+  - Option: renvoyer un identifiant temporaire puis révéler le vrai code seulement sur la page voucher (server‑only).
+- Gouvernance
+  - Quotas par dotation, journalisation, limites d’usage (1 jeu/pers.).
+
 ### Où trouver quoi (repères non‑tech)
 - Page roue et compteurs: `src/components/WheelPopup.tsx`, styles `src/styles/wheel.css`.
 - Page voucher (carte + PDF): `src/app/voucher/[code]/page.tsx`.
