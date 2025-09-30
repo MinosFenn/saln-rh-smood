@@ -77,8 +77,8 @@ export default function WheelPopup() {
       } else if (lot === 'Bon cadeau FDL') {
         finalCode = 'SALON-RH-FDL';
       } else if (lot === '100chf') {
-        // Jour 1 => SALON-RH-WIN-100CHF, Jour 2 => SALON-RH-100CHF-WIN
-        finalCode = eventDay === '1' ? 'SALON-RH-WIN-100CHF' : 'SALON-RH-100CHF-WIN';
+        // Jour 1 => 100 CHF, Jour 2 => FDL
+        finalCode = eventDay === '1' ? 'SALON-RH-WIN-100CHF' : 'SALON-RH-FDL';
       }
       
       // Stocker le code de voucher pour l'affichage
