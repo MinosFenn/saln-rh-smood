@@ -208,7 +208,7 @@ export default function WheelPopup() {
       <div className="wheel-main-content">
         {/* Titre au-dessus des colonnes */}
         <div className="wheel-header">
-          <h1 className="wheel-title">Lancer la roue Smood Business !</h1>
+          <h1 className="wheel-title">Lancez la roue Smood Business !</h1>
         </div>
 
         {/* Container des colonnes */}
