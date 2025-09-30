@@ -1,6 +1,6 @@
 'use client';
 
-import { useParams } from 'next/navigation';
+import { useParams, useSearchParams } from 'next/navigation';
 import { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import jsPDF from 'jspdf';
@@ -48,6 +48,9 @@ const VOUCHER_CONDITIONS = {
 export default function VoucherPage() {
   const params = useParams();
   const code = params.code as string;
+  const searchParams = useSearchParams();
+  const dayParam = searchParams.get('day');
+  const eventDay = dayParam === '2' ? '2' : '1';
   const cardRef = useRef<HTMLDivElement>(null);
   const logoRef = useRef<HTMLImageElement>(null);
 
@@ -192,7 +195,6 @@ export default function VoucherPage() {
             </div>
           )}
 
-          {/* Conditions générales */}
 
           <div className="download-section">
               <h3>Téléchargez l&apos;application :</h3>

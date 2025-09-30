@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import QRCode from 'qrcode';
 import { 
@@ -22,6 +23,9 @@ import { LotType } from '@/config/lotMapping';
 import '@/styles/wheel.css';
 
 export default function WheelPopup() {
+  const searchParams = useSearchParams();
+  const dayParam = searchParams.get('day');
+  const eventDay = dayParam === '2' ? '2' : '1';
   const [hasSpun, setHasSpun] = useState(false);
   const [currentLot, setCurrentLot] = useState<string | null>(null);
   const [turnState, setTurnState] = useState({ currentTurn: 1, totalPlays: 0, lastPlayDate: '' });
@@ -73,7 +77,8 @@ export default function WheelPopup() {
       } else if (lot === 'Bon cadeau FDL') {
         finalCode = 'SALON-RH-FDL';
       } else if (lot === '100chf') {
-        finalCode = 'SALON-RH-100CHF-WIN';
+        // Jour 1 => SALON-RH-WIN-100CHF, Jour 2 => SALON-RH-100CHF-WIN
+        finalCode = eventDay === '1' ? 'SALON-RH-WIN-100CHF' : 'SALON-RH-100CHF-WIN';
       }
       
       // Stocker le code de voucher pour l'affichage
@@ -83,7 +88,7 @@ export default function WheelPopup() {
       if ((lot === 'Bon cadeau 5 CHF' || lot === 'Bon cadeau FDL' || lot === 'Bon cadeau 10 CHF' || lot === '100chf') && finalCode) {
         try {
           // URL de la page web avec le code
-          const webPageUrl = `${window.location.origin}/voucher/${finalCode}`;
+          const webPageUrl = `${window.location.origin}/voucher/${finalCode}?day=${eventDay}`;
           const qrDataUrl = await QRCode.toDataURL(webPageUrl, {
             width: 150,
             margin: 2,
