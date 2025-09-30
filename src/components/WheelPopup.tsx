@@ -204,18 +204,6 @@ export default function WheelPopup() {
   return (
     <div className="full-page-wheel">
 
-      {/* Compteurs en position fixe */}
-      <div className="counters">
-        <div className="counter">
-          <span className="counter-label">Tour actuel:</span>
-          <span className="counter-value">{turnState.currentTurn}</span>
-        </div>
-        <div className="counter">
-          <span className="counter-label">Tours joués:</span>
-          <span className="counter-value">{turnState.totalPlays}</span>
-        </div>
-      </div>
-
       {/* Zone principale - Layout en deux colonnes */}
       <div className="wheel-main-content">
         {/* Titre au-dessus des colonnes */}
@@ -288,6 +276,17 @@ export default function WheelPopup() {
                 </button>
               </div>
             )}
+          </div>
+        </div>
+        {/* Compteurs sous la roue et le bouton, centrés */}
+        <div className="counters">
+          <div className="counter">
+            <span className="counter-label">Tour actuel:</span>
+            <span className="counter-value">{turnState.currentTurn}</span>
+          </div>
+          <div className="counter">
+            <span className="counter-label">Tours joués:</span>
+            <span className="counter-value">{turnState.totalPlays}</span>
           </div>
         </div>
       </div>
