@@ -19,7 +19,7 @@ Créer une activation simple et premium pour salons/événements qui génère du
 - Roue gamifiée (UI optimisée tablette/mobile)
   - Attire, divertit et convertit. Titres, marqueur et ergonomie adaptés aux contraintes salon.
 - Codes voucher standardisés
-  - `SALON-RH-5CHF`, `SALON-RH-10CHF`, `SALON-RH-FDL`, `100 CHF` (config jour J1/J2, voir ci‑dessous).
+  - `SALON-RH-5CHF`, `SALON-RH-10CHF`, `SALON-RH-FDL`, `SALON-RH-WIN-100CHF` (config jour J1/J2, voir ci‑dessous).
   - Affichage conditions en format phrase minimaliste (style T&Cs condensées, centré, lisible).
 - Carte “Wallet‑like” (page `/voucher/[code]`)
   - Logo Smood Business, visuels premium, typographies soignées, alignements précis.
@@ -34,7 +34,7 @@ Créer une activation simple et premium pour salons/événements qui génère du
 
 ### Paramétrage Salon sur 2 jours (dotation 100 CHF)
 - Jour 1 (J1): code 100 CHF = `SALON-RH-WIN-100CHF`
-- Jour 2 (J2): code 100 CHF = `SALON-RH-100CHF-WIN`
+- Jour 2 (J2): code FDL = `SALON-RH-FDL`
 - Comment définir le jour
   - Lancer la roue avec `?day=1` (par défaut) ou `?day=2`.
   - Le QR embarque le même `day`, garantissant la cohérence jusqu’à la page voucher.
@@ -50,8 +50,7 @@ Exemples
 - Optimisations tablette/iPad et mobile (espaces, polices, placements clairs en environnement salon).
 
 ### Mise en place sur stand (checklist)
-- Installer un device en mode plein écran sur la page roue (`?day` correct).
-- Préparer un présentoir QR “Scannez et récupérez votre bon”.
+- Installer un device en mode plein écran orientation paysage sur la page roue (https://salon-rh-smood.vercel.app?day=1).
 - Briefer l’équipe: 3 étapes (lancer, scanner, télécharger), plus rappel de l’app.
 
 ### Pistes d’évolution business
