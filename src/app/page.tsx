@@ -4,14 +4,18 @@ import { useState, useEffect } from 'react';
 import WheelPopup from '@/components/WheelPopup';
 
 export default function Home() {
-  const [isBlocked, setIsBlocked] = useState(false);
+  const ACCESS_CODE = process.env.NEXT_PUBLIC_ACCESS_CODE ?? '';
+  const [isBlocked, setIsBlocked] = useState(true);
   const [accessCode, setAccessCode] = useState('');
   const [showCodeInput, setShowCodeInput] = useState(false);
 
   useEffect(() => {
-    // Vérifier si l'utilisateur a visité une page voucher
-    const hasVisitedVoucher = sessionStorage.getItem('hasVisitedVoucher');
-    if (hasVisitedVoucher) {
+    // Vérifier si un accès a déjà été accordé
+    const accessGranted = localStorage.getItem('home_access_ok');
+    if (accessGranted === 'true') {
+      setIsBlocked(false);
+      setShowCodeInput(false);
+    } else {
       setIsBlocked(true);
       setShowCodeInput(true);
     }
@@ -19,10 +23,10 @@ export default function Home() {
 
   const handleCodeSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (accessCode === '20122025') {
+    if (ACCESS_CODE && accessCode === ACCESS_CODE) {
       setIsBlocked(false);
       setShowCodeInput(false);
-      sessionStorage.removeItem('hasVisitedVoucher');
+      localStorage.setItem('home_access_ok', 'true');
     } else {
       alert('Code incorrect. Veuillez réessayer.');
     }
@@ -49,10 +53,9 @@ export default function Home() {
           width: '90%'
         }}>
           <h1 style={{ color: '#040a8c', marginBottom: '20px' }}>
-            Accès Restreint
+            Accès requis
           </h1>
           <p style={{ color: '#666', marginBottom: '30px' }}>
-            Vous avez déjà utilisé la roue de la fortune. 
             Veuillez entrer le code d&apos;accès pour continuer.
           </p>
           
@@ -70,7 +73,9 @@ export default function Home() {
                   border: '2px solid #040a8c',
                   borderRadius: '10px',
                   fontSize: '16px',
-                  textAlign: 'center'
+                  textAlign: 'center',
+                  color: '#040a8c',           // couleur des points (masque)
+                  caretColor: '#040a8c'       // couleur du curseur
                 }}
               />
               <button

@@ -32,6 +32,15 @@ Créer une activation simple et premium pour salons/événements qui génère du
 - Compteurs d’usage
   - Indicateurs lisibles (tours en cours/joués) placés sous la roue pour faciliter l’animation terrain.
 
+### Stack technique (résumé)
+- Framework: Next.js (App Router)
+- Langage: TypeScript + React
+- UI/Styles: CSS (fichiers dédiés), components maison
+- Génération PDF: html2canvas + jsPDF (capture fidèle à l’élément HTML)
+- QR Code: `qrcode` (data URL)
+- Données roue: CSV local (éditable) – peut évoluer vers API/DB privée
+- Build/Run: Node.js, Vercel (compatible), assets optimisés
+
 ### Paramétrage Salon sur 2 jours (dotation 100 CHF)
 - Jour 1 (J1): code 100 CHF = `SALON-RH-WIN-100CHF`
 - Jour 2 (J2): code FDL = `SALON-RH-FDL`
@@ -52,6 +61,21 @@ Exemples
 ### Mise en place sur stand (checklist)
 - Installer un device en mode plein écran orientation paysage sur la page roue (https://salon-rh-smood.vercel.app?day=1).
 - Briefer l’équipe: 3 étapes (lancer, scanner, télécharger), plus rappel de l’app.
+
+### Refonte rapide pour un prochain salon (checklist réutilisable)
+- Identité/branding:
+  - Remplacer logos/couleurs si co‑branding; vérifier la lisibilité (fond/contraste).
+- Dotations et règles:
+  - Mettre à jour les lots (5/10 CHF/FDL/100 CHF) et la règle `?day` si nécessaire.
+  - Ajuster les textes T&Cs et dates de validité.
+- Données de tirage:
+  - Modifier le CSV (ou la table) des tours/zones; re‑générer au besoin.
+- QR et parcours:
+  - Vérifier que le QR renvoie bien vers la nouvelle instance/URL.
+- PDF & carte:
+  - Tester l’export sur les devices utilisés (iPad, Android, iPhone) pour valider proportions.
+- Mesure & lead gen (optionnel):
+  - Activer un endpoint/API privée + collecte email opt‑in si souhaité.
 
 ### Pistes d’évolution business
 - Collecte opt‑in post‑gain (email/app install) pour nurturing.
